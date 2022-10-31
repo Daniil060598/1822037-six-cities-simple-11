@@ -1,17 +1,17 @@
-function Property() {
+import Logo from '../../components/logo/logo';
+
+function Room(): JSX.Element {
   return (
     <div className="page">
-      <div style={{display: 'none'}}>
-        <svg xmlns="http://www.w3.org/2000/svg"><symbol id="icon-arrow-select" viewBox="0 0 7 4"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 0l3.5 2.813L7 0v1.084L3.5 4 0 1.084V0z"></path></symbol><symbol id="icon-bookmark" viewBox="0 0 17 18"><path d="M3.993 2.185l.017-.092V2c0-.554.449-1 .99-1h10c.522 0 .957.41.997.923l-2.736 14.59-4.814-2.407-.39-.195-.408.153L1.31 16.44 3.993 2.185z"></path></symbol><symbol id="icon-star" viewBox="0 0 13 12"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"></path></symbol></svg>
+      <div style={{ display: 'none' }}>
+        <svg xmlns="http://www.w3.org/2000/svg"><symbol id="icon-arrow-select" viewBox="0 0 7 4"><path fillRule="evenodd" clipRule="evenodd" d="M0 0l3.5 2.813L7 0v1.084L3.5 4 0 1.084V0z"></path></symbol><symbol id="icon-bookmark" viewBox="0 0 17 18"><path d="M3.993 2.185l.017-.092V2c0-.554.449-1 .99-1h10c.522 0 .957.41.997.923l-2.736 14.59-4.814-2.407-.39-.195-.408.153L1.31 16.44 3.993 2.185z"></path></symbol><symbol id="icon-star" viewBox="0 0 13 12"><path fillRule="evenodd" clipRule="evenodd" d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"></path></symbol></svg>
       </div>
 
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -68,7 +68,7 @@ function Property() {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  <span style={{ width: '80%' }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">4.8</span>
@@ -160,7 +160,7 @@ function Property() {
                     <div className="reviews__info">
                       <div className="reviews__rating rating">
                         <div className="reviews__stars rating__stars">
-                          <span style={{width: '80%'}}></span>
+                          <span style={{ width: '80%' }}></span>
                           <span className="visually-hidden">Rating</span>
                         </div>
                       </div>
@@ -196,31 +196,31 @@ function Property() {
                     </label>
 
                     <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
-                      <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                        <svg className="form__star-image" width="37" height="33">
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      </label>
+                    <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
+                      <svg className="form__star-image" width="37" height="33">
+                        <use xlinkHref="#icon-star"></use>
+                      </svg>
+                    </label>
 
-                      <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
-                        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                          <svg className="form__star-image" width="37" height="33">
-                            <use xlinkHref="#icon-star"></use>
-                          </svg>
-                        </label>
-                      </div>
-                      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                      <div className="reviews__button-wrapper">
-                        <p className="reviews__help">
-                          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                        </p>
-                        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
-                      </div>
-                    </form>
-                  </section>
-                </div>
+                    <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
+                    <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
+                      <svg className="form__star-image" width="37" height="33">
+                        <use xlinkHref="#icon-star"></use>
+                      </svg>
+                    </label>
+                  </div>
+                  <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+                  <div className="reviews__button-wrapper">
+                    <p className="reviews__help">
+                      To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+                    </p>
+                    <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+                  </div>
+                </form>
+              </section>
             </div>
-            <section className="property__map map"></section>
+          </div>
+          <section className="property__map map"></section>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -296,7 +296,7 @@ function Property() {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style={{ width: "100%" }}></span>
+                      <span style={{ width: '100%' }}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -314,4 +314,4 @@ function Property() {
   );
 }
 
-export default Property;
+export default Room;
