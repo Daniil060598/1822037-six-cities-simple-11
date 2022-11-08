@@ -8,7 +8,11 @@ type ApartmentCardProps = {
 
 function ApartmentCard({ offer, onCardHover }: ApartmentCardProps): JSX.Element {
   return (
-    <article className="cities__card place-card" onMouseOver={() => onCardHover(offer.id)}>
+    <article
+      className="cities__card place-card"
+      onMouseEnter={() => onCardHover(offer.id)}
+      onMouseLeave={() => onCardHover(0)}
+    >
       {offer.isPremium ? <div className="place-card__mark"><span>Premium</span></div> : ''}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${offer.id}`}>
@@ -17,7 +21,7 @@ function ApartmentCard({ offer, onCardHover }: ApartmentCardProps): JSX.Element 
             src={offer.image}
             width="260"
             height="200"
-            alt="Place image"
+            alt="Place"
           />
         </Link>
       </div>

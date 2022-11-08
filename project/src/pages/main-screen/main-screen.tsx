@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import Header from '../../components/header/header';
+import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
 import { Offers } from '../../types/offers';
 
@@ -8,6 +10,8 @@ type MainProps = {
 }
 
 function Main({ placesCount, offers }: MainProps): JSX.Element {
+  const [activeOfferId, setActiveOfferId] = useState(0);
+
   return (
     <div className="page page--gray page--main">
       <div style={{ display: 'none' }}>
@@ -83,10 +87,10 @@ function Main({ placesCount, offers }: MainProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <OfferList offers={offers} />
+              <OfferList offers={offers} setActiveOfferId={setActiveOfferId} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map offers={offers} activeOfferId={activeOfferId} />
             </div>
           </div>
         </div>

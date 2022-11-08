@@ -24,9 +24,9 @@ function Room({ offers }: RoomProps): JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {
-                room.photos.map((photo) => (
-                  <div className="property__image-wrapper" key=''>
-                    <img className="property__image" src={photo} alt="Photo studio" />
+                room.photos.map((photo, index) => (
+                  <div className="property__image-wrapper" key={`${photo} ${String(index)}`}>
+                    <img className="property__image" src={photo} alt="studio" />
                   </div>
                 ))
               }
@@ -69,8 +69,8 @@ function Room({ offers }: RoomProps): JSX.Element {
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {
-                    room.householdAppliances.map((appliance) => (
-                      <li className="property__inside-item" key=''>
+                    room.householdAppliances.map((appliance, index) => (
+                      <li className="property__inside-item" key={`${appliance} ${String(index)}`}>
                         {appliance}
                       </li>
                     ))
@@ -131,7 +131,7 @@ function Room({ offers }: RoomProps): JSX.Element {
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="/">
-                    <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image" />
+                    <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place" />
                   </a>
                 </div>
                 <div className="place-card__info">
@@ -157,7 +157,7 @@ function Room({ offers }: RoomProps): JSX.Element {
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="/">
-                    <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place image" />
+                    <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place" />
                   </a>
                 </div>
                 <div className="place-card__info">
@@ -186,7 +186,7 @@ function Room({ offers }: RoomProps): JSX.Element {
                 </div>
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="/">
-                    <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place image" />
+                    <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place" />
                   </a>
                 </div>
                 <div className="place-card__info">

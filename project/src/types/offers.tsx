@@ -16,6 +16,19 @@ export type Offer = {
     avatar: string;
     isPro: boolean;
   };
+  location: {
+    lat: number;
+    lng: number;
+    zoom: number;
+  };
+  city: {
+    location: {
+      lat: number;
+      ing: number;
+      zoom: number;
+    };
+    name: string;
+  };
 }
 
 export type Offers = Offer[];
