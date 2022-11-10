@@ -7,10 +7,12 @@ import { Offers } from '../../types/offers';
 
 type MapProps = {
   offers: Offers;
-  activeOfferId: number;
+  activeOfferId?: number;
+  openOfferId?: number;
+  className: string;
 }
 
-function Map({ offers, activeOfferId }: MapProps): JSX.Element {
+function Map({ offers, activeOfferId, openOfferId, className }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef);
 
@@ -31,10 +33,10 @@ function Map({ offers, activeOfferId }: MapProps): JSX.Element {
       offers.forEach((offer) => {
         leaflet
           .marker({
-            lat: offer.location.lat,
-            lng: offer.location.lng,
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
           }, {
-            icon: (offer.id === activeOfferId)
+            icon: (offer.id === activeOfferId || offer.id === openOfferId)
               ? currentCustomIcon
               : defaultCustomIcon,
           })
@@ -45,7 +47,7 @@ function Map({ offers, activeOfferId }: MapProps): JSX.Element {
   }, [map, offers, activeOfferId]);
 
   return (
-    <section className="cities__map map" ref={mapRef}></section>
+    <section className={`${className} map`} ref={mapRef}></section>
   );
 }
 

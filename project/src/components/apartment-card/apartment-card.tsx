@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offers';
+import RatingStars from '../rating-stars/rating-stars';
 
 type ApartmentCardProps = {
   offer: Offer;
+  className: string;
   onCardHover: (offerId: number) => void;
 }
 
-function ApartmentCard({ offer, onCardHover }: ApartmentCardProps): JSX.Element {
+function ApartmentCard({ offer, className, onCardHover }: ApartmentCardProps): JSX.Element {
   return (
     <article
-      className="cities__card place-card"
+      className={`${className} place-card`}
       onMouseEnter={() => onCardHover(offer.id)}
       onMouseLeave={() => onCardHover(0)}
     >
@@ -18,7 +20,7 @@ function ApartmentCard({ offer, onCardHover }: ApartmentCardProps): JSX.Element 
         <Link to={`/offer/${offer.id}`}>
           <img
             className="place-card__image"
-            src={offer.image}
+            src={offer.previewImage}
             width="260"
             height="200"
             alt="Place"
@@ -35,10 +37,7 @@ function ApartmentCard({ offer, onCardHover }: ApartmentCardProps): JSX.Element 
           </div>
         </div>
         <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: `${offer.rating * 20}%` }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
+          <RatingStars rating={offer.rating} className={'place-card__stars'}/>
         </div>
         <h2 className="place-card__name">
           <Link to={`/offer/${offer.id}`}>
