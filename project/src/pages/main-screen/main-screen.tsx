@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
+import { MapClassName, OfferListClassName } from '../../const';
 import { Offers } from '../../types/offers';
 
 type MainProps = {
@@ -87,10 +88,10 @@ function Main({ placesCount, offers }: MainProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <OfferList offers={offers} setActiveOfferId={setActiveOfferId} />
+              <OfferList offers={offers} className={OfferListClassName.Main} setActiveOfferId={setActiveOfferId} />
             </section>
             <div className="cities__right-section">
-              <Map offers={offers} activeOfferId={activeOfferId} />
+              <Map offers={offers} activeOfferId={activeOfferId} className={MapClassName.Main}/>
             </div>
           </div>
         </div>
