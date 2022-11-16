@@ -20,8 +20,6 @@ type RoomProps = {
 function Room({ offers, reviews }: RoomProps): JSX.Element {
   const params = useParams();
   const [activeOfferId, setActiveOfferId] = useState(0);
-  const [openOfferId,] = useState(0);
-  // setOpenOfferId(Number(params.id));
   const room = offers.find((offer) => offer.id.toString() === params.id);
   const offersNearbyCopy = [...offersNearby];
   if (!room) {
@@ -110,7 +108,7 @@ function Room({ offers, reviews }: RoomProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map offers={offersNearbyCopy} className={MapClassName.Room} activeOfferId={activeOfferId} openOfferId={openOfferId} />
+          <Map offers={offersNearbyCopy} className={MapClassName.Room} activeOfferId={activeOfferId} />
         </section>
         <div className="container">
           <section className="near-places places">

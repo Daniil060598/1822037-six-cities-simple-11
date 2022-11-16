@@ -1,6 +1,7 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { UrlMarker } from '../../const';
 import useMap from '../../hooks/useMap';
 import { Offers } from '../../types/offers';
@@ -8,13 +9,14 @@ import { Offers } from '../../types/offers';
 type MapProps = {
   offers: Offers;
   activeOfferId?: number;
-  openOfferId?: number;
   className: string;
 }
 
-function Map({ offers, activeOfferId, openOfferId, className }: MapProps): JSX.Element {
+function Map({ offers, activeOfferId, className }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef);
+  const params = useParams();
+  const currentOfferId = Number(params.id);
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: UrlMarker.Default,
@@ -30,13 +32,18 @@ function Map({ offers, activeOfferId, openOfferId, className }: MapProps): JSX.E
 
   useEffect(() => {
     if (map) {
+      map.setView({
+        lat: offers[0].city.location.latitude,
+        lng: offers[0].city.location.longitude
+      },
+      offers[0].city.location.zoom,);
       offers.forEach((offer) => {
         leaflet
           .marker({
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           }, {
-            icon: (offer.id === activeOfferId || offer.id === openOfferId)
+            icon: (offer.id === activeOfferId || offer.id === currentOfferId)
               ? currentCustomIcon
               : defaultCustomIcon,
           })
