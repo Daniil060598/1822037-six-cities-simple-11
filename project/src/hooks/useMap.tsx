@@ -10,10 +10,10 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>) {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = leaflet.map(mapRef.current, {
         center: {
-          lat: 52.3740300,
-          lng: 4.8896900,
+          lat: 48.85661,
+          lng: 2.351499,
         },
-        zoom: 12,
+        zoom: 13,
       });
 
       leaflet
