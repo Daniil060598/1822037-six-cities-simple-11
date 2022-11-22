@@ -24,5 +24,12 @@ export enum OfferListClassName {
   Room = 'near-places__list'
 }
 
+export enum SortTypes {
+  Popular = 'popular',
+  PriceAscending = 'PriceAscending',
+  PriceDescending = 'PriceDescending',
+  RatingDescending = 'RatingDescending'
+}
+
 export const MONTHS: readonly string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 export const CITIES: readonly string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
