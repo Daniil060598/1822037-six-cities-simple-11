@@ -1,7 +1,7 @@
 import { SyntheticEvent } from 'react';
 import { CITIES } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity, getOffersForCity } from '../../store/action';
+import { changeCity } from '../../store/action';
 
 function CityList(): JSX.Element {
   const currentCity = useAppSelector((state) => state.city);
@@ -16,7 +16,6 @@ function CityList(): JSX.Element {
             onClick={(evt: SyntheticEvent) => {
               evt.preventDefault();
               dispatch(changeCity(city));
-              dispatch(getOffersForCity(city));
             }}
           >
             <a className={`locations__item-link tabs__item ${currentCity === city ? 'tabs__item--active' : ''}`} href='/'>

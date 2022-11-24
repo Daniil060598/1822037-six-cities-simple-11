@@ -1,3 +1,5 @@
+export const TIMEOUT_SHOW_ERROR = 2000;
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -7,6 +9,12 @@ export enum AppRoute {
 export enum UrlMarker {
   Default = '/img/pin.svg',
   Current = '/img/pin-active.svg'
+}
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
 }
 
 export enum MapClassName {
@@ -33,3 +41,9 @@ export enum SortTypes {
 
 export const MONTHS: readonly string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 export const CITIES: readonly string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+}
