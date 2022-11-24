@@ -6,17 +6,15 @@ import OfferListEmpty from '../../components/offer-list-empty/offer-list-empty';
 import OfferList from '../../components/offer-list/offer-list';
 import OfferSorting from '../../components/offer-sorting/offer-sorting';
 import { MapClassName, OfferListClassName } from '../../const';
-import { useAppSelector } from '../../hooks';
 import { Offers } from '../../types/offers';
 
 type MainProps = {
-  offers: Offers;
+  currentOffers: Offers;
+  currentCity: string;
 }
 
-function Main({ offers }: MainProps): JSX.Element {
+function Main({ currentOffers, currentCity }: MainProps): JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState(0);
-  const currentOffers = useAppSelector((state) => state.offers);
-  const currentCity = useAppSelector((state) => state.city);
 
   return (
     <div className="page page--gray page--main">
@@ -37,7 +35,7 @@ function Main({ offers }: MainProps): JSX.Element {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{currentOffers.length} places to stay in {currentCity}</b>
-                <OfferSorting offers={currentOffers} />
+                <OfferSorting />
                 <OfferList offers={currentOffers} className={OfferListClassName.Main} setActiveOfferId={setActiveOfferId} />
               </section>
               <div className="cities__right-section">

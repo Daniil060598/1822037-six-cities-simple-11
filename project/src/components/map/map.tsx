@@ -1,4 +1,4 @@
-import leaflet from 'leaflet';
+import leaflet, { Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -31,26 +31,30 @@ function Map({ offers, activeOfferId, className }: MapProps): JSX.Element {
   });
 
   useEffect(() => {
+    const markers: Marker[] = [];
     if (map) {
       map.setView({
         lat: offers[0].city.location.latitude,
         lng: offers[0].city.location.longitude
       },
-      offers[0].city.location.zoom,);
+      offers[0].city.location.zoom);
+
       offers.forEach((offer) => {
-        leaflet
-          .marker({
-            lat: offer.location.latitude,
-            lng: offer.location.longitude,
-          }, {
-            icon: (offer.id === activeOfferId || offer.id === currentOfferId)
-              ? currentCustomIcon
-              : defaultCustomIcon,
-          })
+        const marker = new Marker({
+          lat: offer.location.latitude,
+          lng: offer.location.longitude,
+        });
+
+        marker.setIcon(
+          (offer.id === activeOfferId || offer.id === currentOfferId)
+            ? currentCustomIcon
+            : defaultCustomIcon,
+        )
           .addTo(map);
+        markers.push(marker);
       });
+      return () => markers.forEach((marker) => marker.removeFrom(map));
     }
-    return () => document.querySelector('.leaflet-pane .leaflet-marker-pane')?.replaceChildren();
   }, [map, offers, activeOfferId]);
 
   return (

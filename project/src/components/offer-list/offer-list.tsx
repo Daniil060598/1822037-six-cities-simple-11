@@ -1,6 +1,7 @@
-import { OfferCardClassName, SortTypes } from '../../const';
+import { OfferCardClassName } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { Offers } from '../../types/offers';
+import compare from '../../utils';
 import ApartmentCard from '../apartment-card/apartment-card';
 
 type OfferListProps = {
@@ -10,25 +11,8 @@ type OfferListProps = {
 }
 
 function OfferList({ offers, className, setActiveOfferId}: OfferListProps): JSX.Element {
-  const typeSorting = useAppSelector((state) => state.typeSorting);
-  let sortedOffers: Offers = [];
-
-  switch (typeSorting) {
-    case SortTypes.PriceAscending:
-      sortedOffers = [...offers].sort((a, b) => a.price - b.price);
-      break;
-    case SortTypes.PriceDescending:
-      sortedOffers = [...offers].sort((a, b) => a.price - b.price).reverse();
-      break;
-    case SortTypes.RatingDescending:
-      sortedOffers = [...offers].sort((a, b) => a.rating - b.rating).reverse();
-      break;
-    case SortTypes.Popular:
-      sortedOffers = offers;
-      break;
-    default:
-      break;
-  }
+  const currentTypeSorting = useAppSelector((state) => state.typeSorting);
+  const sortedOffers = [...offers].sort(compare(currentTypeSorting));
 
   return (
     <div className={`places__list ${className}`}>
