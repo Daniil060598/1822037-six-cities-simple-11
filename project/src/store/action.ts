@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 import { Offers } from '../types/offers';
 
 export const changeCity = createAction<string>('offer/changeCity');
@@ -12,4 +12,4 @@ export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersD
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
-export const setError = createAction<string | null>('app/setError');
+export const redirectToRoute = createAction<AppRoute>('game/redirectToRoute');
