@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Main from '../../pages/main-screen/main-screen';
 import Login from '../../pages/login/login';
@@ -7,6 +7,8 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { Reviews } from '../../types/reviews';
 import ScrollToTop from '../utils/scroll-to-top';
 import { useAppSelector } from '../../hooks';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 type AppProps = {
   reviews: Reviews;
@@ -17,7 +19,7 @@ function App({ reviews }: AppProps): JSX.Element {
   const currentOffers = useAppSelector((state) => state.offers).filter((offer) => offer.city.name === currentCity);
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <ScrollToTop />
       <Routes>
         <Route path={AppRoute.Main} element={<Main currentOffers={currentOffers} currentCity={currentCity}/>} />
@@ -25,7 +27,7 @@ function App({ reviews }: AppProps): JSX.Element {
         <Route path={AppRoute.Room} element={<Room offers={currentOffers} reviews={reviews} />} />
         <Route path='*' element={<NotFoundScreen />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
