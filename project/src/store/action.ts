@@ -20,6 +20,10 @@ export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersD
 
 export const setOfferDataLoadingStatus = createAction<boolean>('data/setOfferDataLoadingStatus');
 
+export const setReviewDataLoadingStatus = createAction<boolean>('data/setReviewDataSendingStatus');
+
+export const setReviewDataDownloadResultStatusCode = createAction<number>('data/setReviewDataDownloadResultStatusCode');
+
 export const setUser = createAction<UserData>('user/setUser');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');

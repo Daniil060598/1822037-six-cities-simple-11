@@ -3,7 +3,20 @@ import { AuthorizationStatus, CITIES, SortTypes } from '../const';
 import { Offer, Offers } from '../types/offers';
 import { Reviews } from '../types/reviews';
 import { UserData } from '../types/user-data';
-import { changeCity, changeTypeSorting, loadOffer, loadOffers, loadOffersNearby, loadReviews, requireAuthorization, setOfferDataLoadingStatus, setOffersDataLoadingStatus, setUser } from './action';
+import {
+  changeCity,
+  changeTypeSorting,
+  loadOffer,
+  loadOffers,
+  loadOffersNearby,
+  loadReviews,
+  requireAuthorization,
+  setOfferDataLoadingStatus,
+  setOffersDataLoadingStatus,
+  setReviewDataDownloadResultStatusCode,
+  setReviewDataLoadingStatus,
+  setUser,
+} from './action';
 
 type InitialState = {
   user: UserData;
@@ -16,7 +29,9 @@ type InitialState = {
   authorizationStatus: string;
   isOffersDataLoadingStatus: boolean;
   isOfferDataLoadingStatus: boolean;
-}
+  isReviewDataLoadingStatus: boolean;
+  reviewDataDownloadResultStatusCode: number;
+};
 
 const initialState: InitialState = {
   user: {} as UserData,
@@ -29,8 +44,9 @@ const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isOffersDataLoadingStatus: false,
   isOfferDataLoadingStatus: false,
+  isReviewDataLoadingStatus: false,
+  reviewDataDownloadResultStatusCode: 0,
 };
-
 
 const reducer = createReducer(initialState, (builder) => {
   builder
@@ -60,6 +76,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOfferDataLoadingStatus, (state, action) => {
       state.isOfferDataLoadingStatus = action.payload;
+    })
+    .addCase(setReviewDataLoadingStatus, (state, action) => {
+      state.isReviewDataLoadingStatus = action.payload;
+    })
+    .addCase(setReviewDataDownloadResultStatusCode, (state, action) => {
+      state.reviewDataDownloadResultStatusCode = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;

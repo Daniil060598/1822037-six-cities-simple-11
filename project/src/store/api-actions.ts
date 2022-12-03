@@ -3,7 +3,19 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import { Offer, Offers } from '../types/offers';
-import { loadOffer, loadOffers, loadOffersNearby, loadReviews, redirectToRoute, requireAuthorization, setOfferDataLoadingStatus, setOffersDataLoadingStatus, setUser } from './action';
+import {
+  loadOffer,
+  loadOffers,
+  loadOffersNearby,
+  loadReviews,
+  redirectToRoute,
+  requireAuthorization,
+  setOfferDataLoadingStatus,
+  setOffersDataLoadingStatus,
+  setReviewDataDownloadResultStatusCode,
+  setReviewDataLoadingStatus,
+  setUser
+} from './action';
 import { dropToken, saveToken } from '../components/services/token';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
@@ -61,7 +73,7 @@ export const fetchReviewsAction = createAsyncThunk<void, string, {
 }>(
   'data/fetchReviewsAction',
   async (id, { dispatch, extra: api }) => {
-    const {data} = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
+    const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
     dispatch(loadReviews(data));
   }
 );
@@ -73,8 +85,17 @@ export const sendReviewAction = createAsyncThunk<void, ReviewData, {
 }>(
   'data/review',
   async ({ hotelId, comment, rating }, { dispatch, extra: api }) => {
-    const { data } = await api.post<Reviews>(`${APIRoute.Comments}/${hotelId}`, { comment, rating });
-    dispatch(loadReviews(data));
+    try {
+      dispatch(setReviewDataLoadingStatus(true));
+      dispatch(setReviewDataDownloadResultStatusCode(0));
+      const { data, status } = await api.post<Reviews>(`${APIRoute.Comments}/${hotelId}`, { comment, rating });
+      dispatch(setReviewDataDownloadResultStatusCode(status));
+      dispatch(setReviewDataLoadingStatus(false));
+      dispatch(loadReviews(data));
+    } catch {
+      dispatch(setReviewDataDownloadResultStatusCode(0));
+      dispatch(setReviewDataLoadingStatus(false));
+    }
   },
 );
 

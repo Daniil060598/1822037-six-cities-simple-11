@@ -1,9 +1,9 @@
-import { FormEvent, useState } from 'react';
+import { StatusCodes } from 'http-status-codes';
+import { FormEvent, useEffect, useState } from 'react';
 import { ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { AuthorizationStatus } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendReviewAction } from '../../store/api-actions';
 
 const MAX_COMMENT_LENGTH = 300;
@@ -38,22 +38,32 @@ const RATING_LIST = [
 
 function CommentForm(): JSX.Element {
   const params = useParams();
-  const dispatch = useDispatch();
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isReviewDataLoadingStatus = useAppSelector((state) => state.isReviewDataLoadingStatus);
+  const reviewDataLoadingResultStatusCode = useAppSelector((state) => state.reviewDataDownloadResultStatusCode);
 
-  const [formData, setFormData] = useState({
-    hotelId: params.id,
-    rating: Number(''),
+  const formDataInitialState = {
+    hotelId: params.id || '',
+    rating: Number(),
     comment: '',
-  });
+  };
 
-  const [formState, setFormState] = useState({
+  const formInitialState = {
     ratingIsEmpty: true,
     commentIsEmpty: true,
     errorMessage: '',
-  });
+  };
+
+  const [formData, setFormData] = useState(formDataInitialState);
+  const [formState, setFormState] = useState(formInitialState);
+
+  useEffect(() => {
+    if (reviewDataLoadingResultStatusCode === StatusCodes.OK) {
+      setFormData(formDataInitialState);
+      setFormState(formInitialState);
+    }
+  }, [reviewDataLoadingResultStatusCode]);
 
   const fieldChangeHandle = (
     evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -86,6 +96,7 @@ function CommentForm(): JSX.Element {
     dispatch(sendReviewAction(formData));
   };
 
+
   return (
     <form
       className="reviews__form form"
@@ -102,7 +113,8 @@ function CommentForm(): JSX.Element {
         <>
           <div className="reviews__rating-form form__rating">
             {RATING_LIST.map((ratingItem) => (
-              <div key={ratingItem.value}>
+              // <div key={ratingItem.value}>
+              <>
                 <input
                   className="form__rating-input visually-hidden"
                   name="rating"
@@ -110,6 +122,7 @@ function CommentForm(): JSX.Element {
                   id={`${ratingItem.value}-stars`}
                   type="radio"
                   onChange={fieldChangeHandle}
+                  checked={Number(ratingItem.value) === Number(formData.rating)}
                 />
                 <label
                   htmlFor={`${ratingItem.value}-stars`}
@@ -120,7 +133,8 @@ function CommentForm(): JSX.Element {
                     <use xlinkHref="#icon-star"></use>
                   </svg>
                 </label>
-              </div>
+              </>
+              // </div>
             ))}
           </div>
           <textarea
@@ -129,6 +143,7 @@ function CommentForm(): JSX.Element {
             name="comment"
             placeholder="Tell how was your stay, what you like and what can be improved"
             onChange={fieldChangeHandle}
+            value={formData.comment}
           >
           </textarea>
           <p style={{ color: 'red', fontSize: '12px', margin: '0' }}>
@@ -144,9 +159,9 @@ function CommentForm(): JSX.Element {
             <button
               className="reviews__submit form__submit button"
               type="submit"
-              disabled={formState.ratingIsEmpty || formState.commentIsEmpty}
+              disabled={formState.ratingIsEmpty || formState.commentIsEmpty || isReviewDataLoadingStatus}
             >
-              Submit
+              {isReviewDataLoadingStatus ? 'Loading...' : 'Submit'}
             </button>
           </div>
         </>

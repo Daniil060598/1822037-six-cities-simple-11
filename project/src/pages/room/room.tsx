@@ -35,9 +35,7 @@ function Room(): JSX.Element {
 
 
   if (isOfferDataLoadingStatus) {
-    return (
-      <LoadingScreen />
-    );
+    return <LoadingScreen />;
   }
 
   if (!Object.keys(room).length) {
