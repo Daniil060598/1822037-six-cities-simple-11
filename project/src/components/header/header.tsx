@@ -5,9 +5,11 @@ import { logoutAction } from '../../store/api-actions';
 import Logo from '../logo/logo';
 
 function Header(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
+
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const user = useAppSelector((state) => state.user);
 
   return (
     <header className="header">
@@ -25,7 +27,7 @@ function Header(): JSX.Element {
                       <li className="header__nav-item user">
                         <div className="header__nav-profile">
                           <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                          <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                          <span className="header__user-name user__name">{user.email}</span>
                         </div>
                       </li>
                       <li className="header__nav-item">

@@ -33,7 +33,7 @@ function OfferSorting(): JSX.Element {
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0} onClick={() => openSorting ? setOpenSorting(false) : setOpenSorting(true)}>
+      <span className="places__sorting-type" tabIndex={0} onClick={() => setOpenSorting(!openSorting)}>
         {currentSortingItem?.name}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>

@@ -9,6 +9,7 @@ import ScrollToTop from '../utils/scroll-to-top';
 import { useAppSelector } from '../../hooks';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 type AppProps = {
   reviews: Reviews;
@@ -17,6 +18,13 @@ type AppProps = {
 function App({ reviews }: AppProps): JSX.Element {
   const currentCity = useAppSelector((state) => state.city);
   const currentOffers = useAppSelector((state) => state.offers).filter((offer) => offer.city.name === currentCity);
+  const isOffersDataLoadingStatus = useAppSelector((state) => state.isOffersDataLoadingStatus);
+
+  if (isOffersDataLoadingStatus) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <HistoryRouter history={browserHistory}>
@@ -24,7 +32,8 @@ function App({ reviews }: AppProps): JSX.Element {
       <Routes>
         <Route path={AppRoute.Main} element={<Main currentOffers={currentOffers} currentCity={currentCity}/>} />
         <Route path={AppRoute.Login} element={<Login />} />
-        <Route path={AppRoute.Room} element={<Room offers={currentOffers} reviews={reviews} />} />
+        <Route path={AppRoute.Room} element={<Room />} />
+        <Route path={AppRoute.NotFound} element={<NotFoundScreen />} />
         <Route path='*' element={<NotFoundScreen />} />
       </Routes>
     </HistoryRouter>

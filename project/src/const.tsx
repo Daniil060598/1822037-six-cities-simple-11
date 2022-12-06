@@ -1,7 +1,8 @@
 export enum AppRoute {
   Main = '/',
   Login = '/login',
-  Room = '/offer/:id'
+  Room = '/offer/:id',
+  NotFound = '/404'
 }
 
 export enum UrlMarker {
@@ -42,6 +43,7 @@ export const CITIES: readonly string[] = ['Paris', 'Cologne', 'Brussels', 'Amste
 
 export enum APIRoute {
   Offers = '/hotels',
+  Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
 }
