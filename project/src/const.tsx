@@ -16,6 +16,21 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum APIRoute {
+  Offers = '/hotels',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export enum NameSpace {
+  Data = 'DATA',
+  App = 'APP',
+  User = 'USER',
+  Offer = 'OFFER',
+}
+
+// Убрать
 export enum MapClassName {
   Main = 'cities__map',
   Room = 'property__map'
@@ -38,12 +53,7 @@ export enum SortTypes {
   RatingDescending = 'RatingDescending'
 }
 
+// Вынести в компонент
 export const MONTHS: readonly string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 export const CITIES: readonly string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-export enum APIRoute {
-  Offers = '/hotels',
-  Comments = '/comments',
-  Login = '/login',
-  Logout = '/logout',
-}

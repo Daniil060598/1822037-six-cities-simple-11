@@ -1,10 +1,11 @@
-import { StatusCodes } from 'http-status-codes';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, memo, useEffect, useState } from 'react';
 import { ChangeEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendReviewAction } from '../../store/api-actions';
+import { getReviewDataLoadingStatus, getReviewSendingStatus } from '../../store/app-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 const MAX_COMMENT_LENGTH = 300;
 const MIN_COMMENT_LENGTH = 50;
@@ -39,9 +40,9 @@ const RATING_LIST = [
 function CommentForm(): JSX.Element {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isReviewDataLoadingStatus = useAppSelector((state) => state.isReviewDataLoadingStatus);
-  const reviewDataLoadingResultStatusCode = useAppSelector((state) => state.reviewDataDownloadResultStatusCode);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isReviewDataLoadingStatus = useAppSelector(getReviewDataLoadingStatus);
+  const reviewSentSuccessfully = useAppSelector(getReviewSendingStatus);
 
   const formDataInitialState = {
     hotelId: params.id || '',
@@ -59,21 +60,18 @@ function CommentForm(): JSX.Element {
   const [formState, setFormState] = useState(formInitialState);
 
   useEffect(() => {
-    if (reviewDataLoadingResultStatusCode === StatusCodes.OK) {
+    if (reviewSentSuccessfully) {
       setFormData(formDataInitialState);
       setFormState(formInitialState);
     }
-  }, [reviewDataLoadingResultStatusCode]);
+  }, [reviewSentSuccessfully]);
 
   const fieldChangeHandle = (
     evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = evt.target;
     if (name === 'comment') {
-      if (
-        value.trim().length >= MIN_COMMENT_LENGTH &&
-        value.trim().length <= MAX_COMMENT_LENGTH
-      ) {
+      if (value.trim().length >= MIN_COMMENT_LENGTH && value.trim().length <= MAX_COMMENT_LENGTH) {
         setFormState({ ...formState, commentIsEmpty: false, errorMessage: '' });
       } else {
         setFormState({
@@ -95,7 +93,6 @@ function CommentForm(): JSX.Element {
     evt.preventDefault();
     dispatch(sendReviewAction(formData));
   };
-
 
   return (
     <form
@@ -172,4 +169,4 @@ function CommentForm(): JSX.Element {
   );
 }
 
-export default CommentForm;
+export default memo(CommentForm);

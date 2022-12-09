@@ -1,29 +1,31 @@
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import CommentForm from '../../components/comment-form/comment-form';
 import Header from '../../components/header/header';
-import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
-import { MapClassName, OfferListClassName } from '../../const';
-import OfferList from '../../components/offer-list/offer-list';
-import { useEffect, useState } from 'react';
+import { MapClassName } from '../../const';
+import { memo, useEffect, useState } from 'react';
 import RoomRating from '../../components/room-rating/room-rating';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchOfferAction, fetchOffersNearbyAction, fetchReviewsAction } from '../../store/api-actions';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
+import RoomReviews from '../../components/room-reviews/room-reviews';
+import RoomOffersNearby from '../../components/room-offers-nearby/room-offers-nearby';
+import RoomGallery from '../../components/room-gallery/room-gallery';
+import RoomTitle from '../../components/room-title/room-title';
+import RoomFeatures from '../../components/room-features/room-features';
+import RoomPrice from '../../components/room-price/room-price';
+import RoomInside from '../../components/room-inside/room-inside';
+import RoomHost from '../../components/room-host/room-host';
+import { getOffer, getOfferDataLoadingStatus, getOffersNearby } from '../../store/app-data/selectors';
 
 function Room(): JSX.Element {
   const params = useParams();
   const [activeOfferId, setActiveOfferId] = useState(0);
   const dispatch = useAppDispatch();
 
-  const room = useAppSelector((state) => state.offer);
-  const offersNearby = useAppSelector((state) => state.offersNearby);
-  const reviews = useAppSelector((state) => state.reviews);
-  const isOfferDataLoadingStatus = useAppSelector((state) => state.isOfferDataLoadingStatus);
-
-  const offersNearbyAndCurrentOffer = [...offersNearby];
-  offersNearbyAndCurrentOffer.push(room);
+  const room = useAppSelector(getOffer);
+  const offersNearby = useAppSelector(getOffersNearby);
+  const isOfferDataLoadingStatus = useAppSelector(getOfferDataLoadingStatus);
 
   useEffect(() => {
     if (params.id) {
@@ -33,6 +35,8 @@ function Room(): JSX.Element {
     }
   }, [params]);
 
+  const offersNearbyAndCurrentOffer = [...offersNearby];
+  offersNearbyAndCurrentOffer.push(room);
 
   if (isOfferDataLoadingStatus) {
     return <LoadingScreen />;
@@ -52,87 +56,34 @@ function Room(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {
-                room.images.map((image, index) => (
-                  <div className="property__image-wrapper" key={`${image} ${String(index)}`}>
-                    <img className="property__image" src={image} alt="studio" />
-                  </div>
-                ))
-              }
+              <RoomGallery images={room.images} />
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {room.isPremium ?
-                <div className="property__mark">
-                  <span>Premium</span>
-                </div> : ''}
-              <div className="property__name-wrapper">
-                <h1 className="property__name">
-                  {room.title}
-                </h1>
-              </div>
+              {
+                room.isPremium ?
+                  <div className="property__mark">
+                    <span>Premium</span>
+                  </div> : ''
+              }
+              <RoomTitle title={room.title} />
               <RoomRating rating={room.rating} />
-              <ul className="property__features">
-                <li className="property__feature property__feature--entire">
-                  {room.type}
-                </li>
-                <li className="property__feature property__feature--bedrooms">
-                  {`${room.bedrooms} Bedrooms`}
-                </li>
-                <li className="property__feature property__feature--adults">
-                  {`Max ${room.maxAdults} adults`}
-                </li>
-              </ul>
-              <div className="property__price">
-                <b className="property__price-value">&euro;{room.price}</b>
-                <span className="property__price-text">&nbsp;night</span>
-              </div>
-              <div className="property__inside">
-                <h2 className="property__inside-title">What&apos;s inside</h2>
-                <ul className="property__inside-list">
-                  {
-                    room.goods.map((appliance, index) => (
-                      <li className="property__inside-item" key={`${appliance} ${String(index)}`}>
-                        {appliance}
-                      </li>
-                    ))
-                  }
-                </ul>
-              </div>
-              <div className="property__host">
-                <h2 className="property__host-title">Meet the host</h2>
-                <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={room.host.avatarUrl} width="74" height="74" alt="Host avatar" />
-                  </div>
-                  <span className="property__user-name">
-                    {room.host.name}
-                  </span>
-                  {room.host.isPro ? <span className="property__user-status">Pro</span> : ''}
-                </div>
-                <div className="property__description">
-                  <p className="property__text" dangerouslySetInnerHTML={{ __html: room.description }} />
-                </div>
-              </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewList reviews={reviews} />
-                <CommentForm />
-              </section>
+              <RoomFeatures typeRoom={room.type} qtyBedrooms={room.bedrooms} maxAdults={room.maxAdults} />
+              <RoomPrice price={room.price} />
+              <RoomInside goods={room.goods}/>
+              <RoomHost hostName={room.host.name} avatarUrl={room.host.avatarUrl} hostIsPro={room.host.isPro} description={room.description} />
+              <RoomReviews />
             </div>
           </div>
           <Map offers={offersNearbyAndCurrentOffer} className={MapClassName.Room} activeOfferId={activeOfferId} />
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OfferList offers={offersNearby} className={OfferListClassName.Room} setActiveOfferId={setActiveOfferId} />
-          </section>
+          <RoomOffersNearby offersNearby={offersNearby} setActiveOfferId={setActiveOfferId} />
         </div>
       </main>
     </div>
   );
 }
 
-export default Room;
+export default memo(Room);

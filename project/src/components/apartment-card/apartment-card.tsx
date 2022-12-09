@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offers';
 import RatingStars from '../rating-stars/rating-stars';
@@ -50,4 +51,4 @@ function ApartmentCard({ offer, className, onCardHover }: ApartmentCardProps): J
   );
 }
 
-export default ApartmentCard;
+export default memo(ApartmentCard);

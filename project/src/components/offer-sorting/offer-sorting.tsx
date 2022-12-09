@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { SortTypes } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeTypeSorting } from '../../store/action';
+import { changeTypeSorting } from '../../store/offer-process/offer-process';
+import { getTypeSorting } from '../../store/offer-process/selectors';
 
 const sortingList = [
   {
@@ -25,7 +26,7 @@ const sortingList = [
 
 function OfferSorting(): JSX.Element {
   const dispatch = useAppDispatch();
-  const currentTypeSorting = useAppSelector((state) => state.typeSorting);
+  const currentTypeSorting = useAppSelector(getTypeSorting);
   const [openSorting, setOpenSorting] = useState(false);
   const currentSortingItem = sortingList.find((item) => currentTypeSorting === item.type);
 
@@ -60,4 +61,4 @@ function OfferSorting(): JSX.Element {
   );
 }
 
-export default OfferSorting;
+export default memo(OfferSorting);

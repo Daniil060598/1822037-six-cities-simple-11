@@ -1,5 +1,7 @@
+import { memo } from 'react';
 import { OfferCardClassName } from '../../const';
 import { useAppSelector } from '../../hooks';
+import { getTypeSorting } from '../../store/offer-process/selectors';
 import { Offers } from '../../types/offers';
 import compare from '../../utils';
 import ApartmentCard from '../apartment-card/apartment-card';
@@ -11,7 +13,7 @@ type OfferListProps = {
 }
 
 function OfferList({ offers, className, setActiveOfferId}: OfferListProps): JSX.Element {
-  const currentTypeSorting = useAppSelector((state) => state.typeSorting);
+  const currentTypeSorting = useAppSelector(getTypeSorting);
   const sortedOffers = [...offers].sort(compare(currentTypeSorting));
 
   return (
@@ -21,4 +23,4 @@ function OfferList({ offers, className, setActiveOfferId}: OfferListProps): JSX.
   );
 }
 
-export default OfferList;
+export default memo(OfferList);

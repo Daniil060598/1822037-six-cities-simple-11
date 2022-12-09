@@ -1,15 +1,17 @@
+import { memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
+import { getAuthorizationStatus, getUser } from '../../store/user-process/selectors';
 import Logo from '../logo/logo';
 
 function Header(): JSX.Element {
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const user = useAppSelector((state) => state.user);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUser);
 
   return (
     <header className="header">
@@ -60,4 +62,4 @@ function Header(): JSX.Element {
   );
 }
 
-export default Header;
+export default memo(Header);

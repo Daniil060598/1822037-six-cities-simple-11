@@ -1,9 +1,9 @@
+import { memo } from 'react';
 import RatingStars from '../rating-stars/rating-stars';
 
 type RatingProps = {
   rating: number;
 }
-
 
 function RoomRating({ rating }: RatingProps): JSX.Element {
   return (
@@ -14,5 +14,5 @@ function RoomRating({ rating }: RatingProps): JSX.Element {
   );
 }
 
-export default RoomRating;
+export default memo(RoomRating);
 
