@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import CityList from '../../components/city-list/city-list';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
@@ -6,15 +6,14 @@ import OfferListEmpty from '../../components/offer-list-empty/offer-list-empty';
 import OfferList from '../../components/offer-list/offer-list';
 import OfferSorting from '../../components/offer-sorting/offer-sorting';
 import { MapClassName, OfferListClassName } from '../../const';
-import { Offers } from '../../types/offers';
+import { useAppSelector } from '../../hooks';
+import { getOffers } from '../../store/app-data/selectors';
+import { getCity } from '../../store/offer-process/selectors';
 
-type MainProps = {
-  currentOffers: Offers;
-  currentCity: string;
-}
-
-function Main({ currentOffers, currentCity }: MainProps): JSX.Element {
+function Main(): JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState(0);
+  const currentCity = useAppSelector(getCity);
+  const currentOffers = useAppSelector(getOffers).filter((offer) => offer.city.name === currentCity);
 
   return (
     <div className="page page--gray page--main">
@@ -49,4 +48,4 @@ function Main({ currentOffers, currentCity }: MainProps): JSX.Element {
   );
 }
 
-export default Main;
+export default memo(Main);
