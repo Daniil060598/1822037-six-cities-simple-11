@@ -16,7 +16,7 @@ import RoomFeatures from '../../components/room-features/room-features';
 import RoomPrice from '../../components/room-price/room-price';
 import RoomInside from '../../components/room-inside/room-inside';
 import RoomHost from '../../components/room-host/room-host';
-import { getOffer, getOfferDataLoadingStatus, getOffersNearby } from '../../store/app-data/selectors';
+import { getFetchingOfferErrorStatus, getOffer, getOfferDataLoadingStatus, getOffersNearby } from '../../store/app-data/selectors';
 
 function Room(): JSX.Element {
   const params = useParams();
@@ -26,13 +26,20 @@ function Room(): JSX.Element {
   const room = useAppSelector(getOffer);
   const offersNearby = useAppSelector(getOffersNearby);
   const isOfferDataLoadingStatus = useAppSelector(getOfferDataLoadingStatus);
+  const fetchingOfferHasError = useAppSelector(getFetchingOfferErrorStatus);
 
   useEffect(() => {
-    if (params.id) {
+    let isMounted = true;
+
+    if (isMounted && params.id) {
       dispatch(fetchOfferAction(params.id));
       dispatch(fetchOffersNearbyAction(params.id));
       dispatch(fetchReviewsAction(params.id));
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [params]);
 
   const offersNearbyAndCurrentOffer = [...offersNearby];
@@ -42,7 +49,7 @@ function Room(): JSX.Element {
     return <LoadingScreen />;
   }
 
-  if (!Object.keys(room).length) {
+  if (!Object.keys(room).length || fetchingOfferHasError) {
     return <NotFoundScreen />;
   }
 
@@ -79,7 +86,7 @@ function Room(): JSX.Element {
           <Map offers={offersNearbyAndCurrentOffer} className={MapClassName.Room} activeOfferId={activeOfferId} />
         </section>
         <div className="container">
-          <RoomOffersNearby offersNearby={offersNearby} setActiveOfferId={setActiveOfferId} />
+          <RoomOffersNearby offersNearby={offersNearby} onCardHover={setActiveOfferId} />
         </div>
       </main>
     </div>

@@ -21,7 +21,9 @@ export type AppData = {
   isOffersDataLoadingStatus: boolean;
   isOfferDataLoadingStatus: boolean;
   isReviewDataLoadingStatus: boolean;
-  reviewSentSuccessfully: boolean;
+  fetchingOffersHasError: boolean;
+  fetchingOfferHasError: boolean;
+  sendingReviewHasError: boolean;
 }
 
 export type OfferProcess = {

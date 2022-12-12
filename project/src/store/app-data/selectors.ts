@@ -10,4 +10,6 @@ export const getReviews = (state: State): Reviews => state[NameSpace.Data].revie
 export const getOffersDataLoadingStatus = (state: State): boolean => state[NameSpace.Data].isOffersDataLoadingStatus;
 export const getOfferDataLoadingStatus = (state: State): boolean => state[NameSpace.Data].isOfferDataLoadingStatus;
 export const getReviewDataLoadingStatus = (state: State): boolean => state[NameSpace.Data].isReviewDataLoadingStatus;
-export const getReviewSendingStatus = (state: State): boolean => state[NameSpace.Data].reviewSentSuccessfully;
+export const getFetchingOffersErrorStatus = (state: State): boolean => state[NameSpace.Data].fetchingOffersHasError;
+export const getFetchingOfferErrorStatus = (state: State): boolean => state[NameSpace.Data].fetchingOfferHasError;
+export const getSendingReviewErrorStatus = (state: State): boolean => state[NameSpace.Data].sendingReviewHasError;

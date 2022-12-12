@@ -5,7 +5,7 @@ type RatingStarsProps = {
 
 
 function RatingStars({ rating, className }: RatingStarsProps): JSX.Element {
-  const calculatedRating = (rating * 20);
+  const calculatedRating = Math.round(rating) * 20;
   return (
     <div className={`${className ? className : ''} rating__stars`}>
       <span style={{ width: `${calculatedRating}%` }}></span>

@@ -1,20 +1,35 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import Header from '../../components/header/header';
-import { useAppDispatch } from '../../hooks';
+import { AuthorizationStatus, AppRoute } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { AuthData } from '../../types/auth-data';
 
 function Login(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (isMounted && (authorizationStatus === AuthorizationStatus.Auth)) {
+      dispatch(redirectToRoute(AppRoute.Main));
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [authorizationStatus]);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
@@ -39,7 +54,7 @@ function Login(): JSX.Element {
               className="login__form form"
               action="#"
               method="post"
-              onSubmit={handleSubmit}
+              onSubmit={handleFormSubmit}
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
@@ -59,6 +74,8 @@ function Login(): JSX.Element {
                   className="login__input form__input"
                   type="password" name="password"
                   placeholder="Password"
+                  pattern="^.*[A-Za-zА-Яа-яЁё]+.*[0-9]+.*|.*[0-9]+.*[A-Za-zА-Яа-яЁё]+.*$"
+                  title="Password must contain at least one letter and one number"
                   required
                 />
               </div>
