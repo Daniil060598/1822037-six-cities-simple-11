@@ -20,7 +20,7 @@ import { getFetchingOfferErrorStatus, getOffer, getOfferDataLoadingStatus, getOf
 
 function Room(): JSX.Element {
   const params = useParams();
-  const [activeOfferId, setActiveOfferId] = useState(0);
+  const [, setActiveOfferId] = useState(0);
   const dispatch = useAppDispatch();
 
   const room = useAppSelector(getOffer);
@@ -83,7 +83,7 @@ function Room(): JSX.Element {
               <RoomReviews />
             </div>
           </div>
-          <Map offers={offersNearbyAndCurrentOffer} className={MapClassName.Room} activeOfferId={activeOfferId} />
+          <Map offers={offersNearbyAndCurrentOffer} className={MapClassName.Room}/>
         </section>
         <div className="container">
           <RoomOffersNearby offersNearby={offersNearby} onCardHover={setActiveOfferId} />
