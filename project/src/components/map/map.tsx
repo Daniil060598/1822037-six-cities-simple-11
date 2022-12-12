@@ -2,9 +2,13 @@ import leaflet, { Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { UrlMarker } from '../../const';
 import useMap from '../../hooks/useMap';
 import { Offers } from '../../types/offers';
+
+export enum UrlMarker {
+  Default = '/img/pin.svg',
+  Current = '/img/pin-active.svg'
+}
 
 type MapProps = {
   offers: Offers;
@@ -32,7 +36,9 @@ function Map({ offers, activeOfferId, className }: MapProps): JSX.Element {
 
   useEffect(() => {
     const markers: Marker[] = [];
-    if (map) {
+    let isMounted = true;
+
+    if (isMounted && map) {
       map.setView({
         lat: offers[0].city.location.latitude,
         lng: offers[0].city.location.longitude
@@ -53,7 +59,10 @@ function Map({ offers, activeOfferId, className }: MapProps): JSX.Element {
           .addTo(map);
         markers.push(marker);
       });
-      return () => markers.forEach((marker) => marker.removeFrom(map));
+      return () => {
+        markers.forEach((marker) => marker.removeFrom(map));
+        isMounted = false;
+      };
     }
   }, [map, offers, activeOfferId]);
 

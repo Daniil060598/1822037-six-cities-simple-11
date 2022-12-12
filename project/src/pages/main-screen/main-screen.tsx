@@ -1,4 +1,5 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import CityList from '../../components/city-list/city-list';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
@@ -7,13 +8,28 @@ import OfferList from '../../components/offer-list/offer-list';
 import OfferSorting from '../../components/offer-sorting/offer-sorting';
 import { MapClassName, OfferListClassName } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getOffers } from '../../store/app-data/selectors';
+import { getFetchingOffersErrorStatus, getOffers } from '../../store/app-data/selectors';
 import { getCity } from '../../store/offer-process/selectors';
 
-function Main(): JSX.Element {
+const HOTEL_LOADING_ERROR_MESSAGE = 'Failed to load hotels.';
+
+function MainScreen(): JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState(0);
   const currentCity = useAppSelector(getCity);
   const currentOffers = useAppSelector(getOffers).filter((offer) => offer.city.name === currentCity);
+  const fetchingOffersHasError = useAppSelector(getFetchingOffersErrorStatus);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (isMounted && fetchingOffersHasError) {
+      toast.error(HOTEL_LOADING_ERROR_MESSAGE);
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [fetchingOffersHasError]);
 
   return (
     <div className="page page--gray page--main">
@@ -35,7 +51,7 @@ function Main(): JSX.Element {
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{currentOffers.length} places to stay in {currentCity}</b>
                 <OfferSorting />
-                <OfferList offers={currentOffers} className={OfferListClassName.Main} setActiveOfferId={setActiveOfferId} />
+                <OfferList offers={currentOffers} className={OfferListClassName.Main} onCardHover={setActiveOfferId} />
               </section>
               <div className="cities__right-section">
                 <Map offers={currentOffers} activeOfferId={activeOfferId} className={MapClassName.Main} />
@@ -48,4 +64,4 @@ function Main(): JSX.Element {
   );
 }
 
-export default memo(Main);
+export default memo(MainScreen);

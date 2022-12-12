@@ -30,7 +30,6 @@ function OfferSorting(): JSX.Element {
   const [openSorting, setOpenSorting] = useState(false);
   const currentSortingItem = sortingList.find((item) => currentTypeSorting === item.type);
 
-
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>

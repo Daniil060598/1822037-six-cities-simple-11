@@ -9,16 +9,16 @@ import ApartmentCard from '../apartment-card/apartment-card';
 type OfferListProps = {
   offers: Offers;
   className: string;
-  setActiveOfferId: (offerId: number) => void;
+  onCardHover: (offerId: number) => void;
 }
 
-function OfferList({ offers, className, setActiveOfferId}: OfferListProps): JSX.Element {
+function OfferList({ offers, className, onCardHover }: OfferListProps): JSX.Element {
   const currentTypeSorting = useAppSelector(getTypeSorting);
   const sortedOffers = [...offers].sort(compare(currentTypeSorting));
 
   return (
     <div className={`places__list ${className}`}>
-      {sortedOffers.map((offer) => <ApartmentCard key={offer.id} offer={offer} onCardHover={setActiveOfferId} className={OfferCardClassName.Main}/>)}
+      {sortedOffers.map((offer) => <ApartmentCard key={offer.id} offer={offer} onCardHover={onCardHover} className={OfferCardClassName.Main} />)}
     </div>
   );
 }

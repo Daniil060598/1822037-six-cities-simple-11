@@ -4,7 +4,7 @@ import { AppDispatch, State } from '../types/state';
 import { APIRoute, AppRoute } from '../const';
 import { Offer, Offers } from '../types/offers';
 import { redirectToRoute } from './action';
-import { dropToken, saveToken } from '../components/services/token';
+import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { Reviews } from '../types/reviews';
@@ -16,8 +16,8 @@ export const fetchOffersAction = createAsyncThunk<Offers, undefined, {
   extra: AxiosInstance;
 }>(
   'data/fetchOffers',
-  async (_arg, { dispatch, extra: api }) => {
-    const { data } = await api.get<Offers>(APIRoute.Offers);
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<Offers>(APIRoute.Offer);
     return data;
   },
 );
@@ -28,8 +28,8 @@ export const fetchOfferAction = createAsyncThunk<Offer, string, {
   extra: AxiosInstance;
 }>(
   'data/fetchOffer',
-  async (id, { dispatch, extra: api }) => {
-    const { data } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+  async (id, { extra: api }) => {
+    const { data } = await api.get<Offer>(`${APIRoute.Offer}/${id}`);
     return data;
   },
 );
@@ -40,8 +40,8 @@ export const fetchOffersNearbyAction = createAsyncThunk<Offers, string, {
   extra: AxiosInstance;
 }>(
   'data/fetchOffersNearby',
-  async (id, { dispatch, extra: api }) => {
-    const { data } = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
+  async (id, { extra: api }) => {
+    const { data } = await api.get<Offers>(`${APIRoute.Offer}/${id}/nearby`);
     return data;
   },
 );
@@ -53,7 +53,7 @@ export const fetchReviewsAction = createAsyncThunk<Reviews, string, {
 }>(
   'data/fetchReviewsAction',
   async (id, { extra: api }) => {
-    const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
+    const { data } = await api.get<Reviews>(`${APIRoute.Comment}/${id}`);
     return data;
   }
 );
@@ -63,9 +63,9 @@ export const sendReviewAction = createAsyncThunk<Reviews, ReviewData, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/review',
+  'data/sendReviewAction',
   async ({ hotelId, comment, rating }, { extra: api }) => {
-    const { data } = await api.post<Reviews>(`${APIRoute.Comments}/${hotelId}`, { comment, rating });
+    const { data } = await api.post<Reviews>(`${APIRoute.Comment}/${hotelId}`, { comment, rating });
     return data;
   },
 );
@@ -76,7 +76,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { extra: api }) => {
     await api.get(APIRoute.Login);
   },
 );
@@ -101,7 +101,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/logout',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
   },

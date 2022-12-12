@@ -9,7 +9,6 @@ import Logo from '../logo/logo';
 function Header(): JSX.Element {
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const user = useAppSelector(getUser);
 

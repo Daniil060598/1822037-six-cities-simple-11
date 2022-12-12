@@ -12,7 +12,9 @@ const initialState: AppData = {
   isOffersDataLoadingStatus: false,
   isOfferDataLoadingStatus: false,
   isReviewDataLoadingStatus: false,
-  reviewSentSuccessfully: false,
+  fetchingOffersHasError: false,
+  fetchingOfferHasError: false,
+  sendingReviewHasError: false,
 };
 
 export const appData = createSlice({
@@ -23,17 +25,27 @@ export const appData = createSlice({
     builder
       .addCase(fetchOffersAction.pending, (state) => {
         state.isOffersDataLoadingStatus = true;
+        state.fetchingOffersHasError = false;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.offers = action.payload;
         state.isOffersDataLoadingStatus = false;
       })
+      .addCase(fetchOffersAction.rejected, (state) => {
+        state.isOffersDataLoadingStatus = false;
+        state.fetchingOffersHasError = true;
+      })
       .addCase(fetchOfferAction.pending, (state) => {
         state.isOfferDataLoadingStatus = true;
+        state.fetchingOfferHasError = false;
       })
       .addCase(fetchOfferAction.fulfilled, (state, action) => {
         state.offer = action.payload;
         state.isOfferDataLoadingStatus = false;
+      })
+      .addCase(fetchOfferAction.rejected, (state) => {
+        state.isOfferDataLoadingStatus = false;
+        state.fetchingOfferHasError = true;
       })
       .addCase(fetchOffersNearbyAction.fulfilled, (state, action) => {
         state.offersNearby = action.payload;
@@ -43,16 +55,15 @@ export const appData = createSlice({
       })
       .addCase(sendReviewAction.pending, (state) => {
         state.isReviewDataLoadingStatus = true;
-        state.reviewSentSuccessfully = false;
+        state.sendingReviewHasError = false;
       })
       .addCase(sendReviewAction.fulfilled, (state, action) => {
         state.isReviewDataLoadingStatus = false;
-        state.reviewSentSuccessfully = true;
         state.reviews = action.payload;
       })
       .addCase(sendReviewAction.rejected, (state) => {
         state.isReviewDataLoadingStatus = false;
-        state.reviewSentSuccessfully = false;
+        state.sendingReviewHasError = true;
       });
   }
 });
