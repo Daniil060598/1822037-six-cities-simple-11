@@ -23,7 +23,7 @@ function Login(): JSX.Element {
     return () => {
       isMounted = false;
     };
-  }, [authorizationStatus]);
+  }, [authorizationStatus, dispatch]);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));

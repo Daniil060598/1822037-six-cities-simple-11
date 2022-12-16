@@ -9,6 +9,7 @@ import {
   getSendingReviewErrorStatus,
 } from '../../store/app-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import './style.css';
 
 enum CommentLength {
   Max = 300,
@@ -229,7 +230,7 @@ function CommentForm(): JSX.Element {
             disabled={isReviewDataLoadingStatus}
           >
           </textarea>
-          <p style={{ color: 'red', fontSize: '12px', margin: '0' }}>
+          <p className='form__error-message'>
             {formState.errorMessage}
           </p>
           <div className="reviews__button-wrapper">

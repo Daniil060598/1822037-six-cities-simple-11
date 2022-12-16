@@ -4,7 +4,7 @@ import MainScreen from '../../pages/main-screen/main-screen';
 import Login from '../../pages/login/login';
 import Room from '../../pages/room/room';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import ScrollToTop from '../utils/scroll-to-top';
+import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { useAppSelector } from '../../hooks';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';

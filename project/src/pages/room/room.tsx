@@ -40,7 +40,7 @@ function Room(): JSX.Element {
     return () => {
       isMounted = false;
     };
-  }, [params]);
+  }, [params, dispatch]);
 
   const offersNearbyAndCurrentOffer = [...offersNearby];
   offersNearbyAndCurrentOffer.push(room);
