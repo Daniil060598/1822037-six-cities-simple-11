@@ -9,7 +9,7 @@ import { useAppSelector } from '../../hooks';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { getOffersDataLoadingStatus } from '../../store/app-data/selectors';
+import { getOffersDataLoadingStatus } from '../../store/offers-data/selectors';
 
 function App(): JSX.Element {
   const isOffersDataLoadingStatus = useAppSelector(getOffersDataLoadingStatus);

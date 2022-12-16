@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { useAppSelector } from '../../hooks';
-import { getReviews } from '../../store/app-data/selectors';
+import { getReviews } from '../../store/review-data/selectors';
 import CommentForm from '../comment-form/comment-form';
 import ReviewList from '../review-list/review-list';
 

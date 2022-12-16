@@ -21,10 +21,12 @@ export enum APIRoute {
 }
 
 export enum NameSpace {
-  Data = 'DATA',
-  App = 'APP',
   User = 'USER',
   Offer = 'OFFER',
+  OffersData = 'OFFERS_DATA',
+  OfferData = 'OFFER_DATA',
+  OffersNearbyData = 'OFFERS_NEARBY_DATA',
+  ReviewsData = 'REVIEWS_DATA',
 }
 
 export enum SortTypes {

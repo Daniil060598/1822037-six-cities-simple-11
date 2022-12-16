@@ -5,9 +5,9 @@ import { AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendReviewAction } from '../../store/api-actions';
 import {
-  getReviewDataLoadingStatus,
-  getSendingReviewErrorStatus,
-} from '../../store/app-data/selectors';
+
+} from '../../store/offers-data/selectors';
+import { getReviewDataLoadingStatus, getSendingReviewErrorStatus } from '../../store/review-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 enum CommentLength {

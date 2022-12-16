@@ -8,7 +8,7 @@ import OfferList from '../../components/offer-list/offer-list';
 import OfferSorting from '../../components/offer-sorting/offer-sorting';
 import { MapClassName, OfferListClassName } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getFetchingOffersErrorStatus, getOffers } from '../../store/app-data/selectors';
+import { getFetchingOffersErrorStatus, getOffers } from '../../store/offers-data/selectors';
 import { getCity } from '../../store/offer-process/selectors';
 
 const HOTEL_LOADING_ERROR_MESSAGE = 'Failed to load hotels.';

@@ -16,7 +16,8 @@ import RoomFeatures from '../../components/room-features/room-features';
 import RoomPrice from '../../components/room-price/room-price';
 import RoomInside from '../../components/room-inside/room-inside';
 import RoomHost from '../../components/room-host/room-host';
-import { getFetchingOfferErrorStatus, getOffer, getOfferDataLoadingStatus, getOffersNearby } from '../../store/app-data/selectors';
+import { getFetchingOfferErrorStatus, getOffer, getOfferDataLoadingStatus } from '../../store/offer-data/selectors';
+import { getOffersNearby } from '../../store/offers-nearby-data/selectors';
 
 function Room(): JSX.Element {
   const params = useParams();

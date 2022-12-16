@@ -13,20 +13,29 @@ export type UserProcess = {
   user: UserData;
 };
 
-export type AppData = {
-  offers: Offers;
-  offer: Offer;
-  offersNearby: Offers;
-  reviews: Reviews;
-  isOffersDataLoadingStatus: boolean;
-  isOfferDataLoadingStatus: boolean;
-  isReviewDataLoadingStatus: boolean;
-  fetchingOffersHasError: boolean;
-  fetchingOfferHasError: boolean;
-  sendingReviewHasError: boolean;
-}
-
 export type OfferProcess = {
   city: string;
   typeSorting: string;
+}
+
+export type OffersData = {
+  offers: Offers;
+  isOffersDataLoadingStatus: boolean;
+  fetchingOffersHasError: boolean;
+}
+
+export type OfferData = {
+  offer: Offer;
+  isOfferDataLoadingStatus: boolean;
+  fetchingOfferHasError: boolean;
+}
+
+export type OffersNearbyData = {
+  offersNearby: Offers;
+}
+
+export type ReviewsData = {
+  reviews: Reviews;
+  isReviewDataLoadingStatus: boolean;
+  sendingReviewHasError: boolean;
 }
